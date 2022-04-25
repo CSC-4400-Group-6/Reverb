@@ -1,0 +1,72 @@
+body{
+	background-color: #D6D6D6;
+	margin: 0px;
+}
+
+.flex-container{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	text-align: center;
+	background-color: #3D70FF;
+	padding: 0px;
+	margin-left: 50px;
+	margin-right: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#main-content1{
+	flex-direction: column;
+	font-size: 14px;
+	padding: 20px;
+}
+
+#main-content2{
+	flex-direction: row;
+	font-size: 14px;
+	padding: 20px;
+}
+
+#file-info{
+	font-size: 24;
+	text-align: left;
+}
+
+#banner{
+	width: 100%;
+	object-fit: contain;
+}
+
+/*Nav bar code taken from w3schools and modifed: https://www.w3schools.com/howto/howto_js_topnav.asp*/
+/* Add a blue background color to the top navigation */
+.topnav {
+  background-color: #47BBFF;
+  overflow: hidden;
+  position: sticky;
+  top: 0px;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #D6D6D6;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #2D31FF;
+  color: white;
+}
