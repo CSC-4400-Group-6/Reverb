@@ -42,7 +42,7 @@
 	  else
 	  {
 		  echo "Regular ol User";
-		  echo "YOU ARE AN ADMIN";
+		  echo "YOU ARE NOT AN ADMIN";
 		  header("Location:..\admin\login.php", true, 301);
 	  }  
   }

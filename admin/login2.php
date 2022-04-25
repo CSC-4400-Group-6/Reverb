@@ -9,13 +9,13 @@
 			
 				<div class="field">
 					<div class="control">
-						<input class="input is-large" name="uname", placeholder="Username" autofocus="">
+						<input class="input is-large" name="uname", placeholder="Username" autofocus="" required>
 					</div>
 				</div>
 
 				<div class="field">
 					<div class="control">
-						<input class="input is-large" type="password" name="pword", placeholder="Password">
+						<input class="input is-large" type="password" name="pword", placeholder="Password" required>
 					</div>
 				</div>
 				
@@ -34,7 +34,7 @@
 		<!-- Footer Stuff -->
 		<p class="has-text-grey">
 			<a href="../">Sign Up</a> &nbsp;·&nbsp;
-			<a href="../">Forgot Password</a> &nbsp;·&nbsp;
+			<a href="forgotPassword.php">Forgot Password</a> &nbsp;·&nbsp;
 			<a href="../">Need Help?</a>
 		</p>
 		
