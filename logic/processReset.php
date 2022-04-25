@@ -20,19 +20,20 @@
   
   $password=$_POST["pword"];
   $confpassword=$_POST["confirmpword"];
-  //$query="SELECT Password FROM `user` WHERE `Username`='$username' AND `SecurityQuestion1`='$security';"; //UPDATE user SET password='newpassword' WHERE username='$username';
-  //$result=mysqli_query($conn,$query);
-  //$count=mysqli_num_rows($result);
-  //if($count == 1)
-  //{
+  $username=$_POST["uname"];
+  if($password = $confpassword)
+  {
+	    $query="UPDATE user SET Password='$password' WHERE Username='$username';";
+	    $result=mysqli_query($conn, $query);
 		//Redirect user to password reset page if they are in the database
 		echo "Password Reset successfully. Redirecting to log in page...";
 		header("Location:..\admin\login.php", true, 301);
-  //}
-  //else
-  //{
-	  //echo "BEGONE IMPOSTER <br>";
-	  //header("Location:..\admin\login.php", true, 301);
-  //}
+	 
+  }
+  else
+  {
+	  echo "The passwords didn't match <br>";
+  }
+  
 
 ?>

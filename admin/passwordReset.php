@@ -17,9 +17,15 @@
 			<div class="column is-4 is-offset-4">
 				<h3 class="title has-text-black">Password Reset</h3>
 				<hr class="login-hr">
-				<p class="subtitle has-text-black">Please enter new password</p>
+				<p class="subtitle has-text-black">Please enter your username and a new password.</p>
 				<div class="box">
-					<form action = "../admin/login.php" method = "post">
+					<form action = "../logic/processReset.php" method = "post">
+					
+						<div class="field">
+							<div class="control">
+								<input class="input is-large" name="uname", placeholder="Username" autofocus="" required>
+							</div>
+						</div>
 					
 						<div class="field">
 							<div class="control">
