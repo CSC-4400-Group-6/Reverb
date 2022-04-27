@@ -1,43 +1,22 @@
-<?php
-  // We need to have this to persist data between pages
-  session_start();
-  
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "reverb";
-  
-  echo "Title: ",     $_POST["title"],        "<br>";
-  echo "Body: ",      $_POST["body"],         "<br>";
-  echo "Creator: ",   $_POST['creator'],      "<br>";
-  echo "Timestamp: ", $_POST['timestamp'],    "<br>";
-  
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $dbname);
+<div id="modal-js-edit-announcement" class="modal">
+  <div class="modal-background"></div>
 
-  // Check connection
-  if ($conn->connect_error) {
-    echo("Connection failed <br>");
-  }else {
-	echo("Connected <br>");
-  }
-  
-  $title=$_POST["title"];
-  $body=$_POST["body"];
-  $creator=$_POST['creator'];
-  $timestamp=$_POST['timestamp'];
-  
-  if (isset($_POST['edit'])) {
-	  echo "EDIT BUTTON <br>";
-	}
-  elseif (isset($_POST['delete'])) {
-	  echo "DELETE BUTTON <br>";
-	}
-  else {
-	echo "YOU SCREWED UP <br>";
-    }
-  
-  //$query="INSERT INTO `announcement` (`AnnouncementID`, `Title`, `Body`, `Creator`, `Timestamp`) VALUES (NULL, '$title', '$body', '$username', current_timestamp());";
-  //$result=mysqli_query($conn,$query);
+  <div class="modal-content">
+    <div class="box">	
+	
+		<h1 class="title has-text-centered"> Edit Announcement </h1>
+		<form action = "../logic/editAnnouncement2.php" method = "post" >
+			<input type="hidden" name="ID" id="edit-ID" value="">
+			<input type="hidden" name="timestamp" id="edit-timestamp" value="">
+			<input class="input is-primary" name="title" id="edit-title" type="text" placeholder="Title">
+			<br><br>
+			<textarea class="textarea is-info" name="body" id="edit-body" placeholder="Body"></textarea>	
+			<br><br>
+			<button class="button is-block is-info is-large is-fullwidth"> Update Announcement </button>
+		</form>
 
-?>
+    </div>
+  </div>
+
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>

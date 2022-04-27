@@ -13,22 +13,22 @@
 	</head>
 	<body>
 	
+		<!-- Init the header -->
 		<?php include("../shared/header.php"); ?>
+		<!-- Highlight the page we are currently on -->
+		<script type="module">
+			document.getElementById('4').className += 'is-active';
+		</script>
 		
 		<?php
 			if($_SESSION['username'] ?? null)
 			{
-				echo '<h1 class="title has-text-centered"> Hello ' . $_SESSION['username'] . '</h1>';
-				echo '<form action = "../logic/processLogin.php" method = "post" >
-						<button class="button is-block is-info is-large is-fullwidth">Log Out </button>
-					</form>';
+				include("../user/profilepage.php");
 			}
 			else {
 				include("../admin/login2.php");
 			}
 		?>
 		
-		
-
 	</body>
 </html>

@@ -1,30 +1,17 @@
-<?php
-  // We need to have this to persist data between pages
-  session_start();
-  
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "reverb";
-  
-  echo "Title: ", $_POST["title"], "<br>";
-  echo "Body: ", $_POST["body"], "<br>";
-  echo "Admin: ", $_SESSION['username'], "<br>";
+<div id="modal-js-delete-announcement" class="modal">
+  <div class="modal-background"></div>
 
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $dbname);
+  <div class="modal-content">
+    <div class="box">	
+	
+		<h1 class="title has-text-centered"> Are you sure you want to delete this announcement? </h1>
+		<form action = "../logic/deleteAnnouncement2.php" method = "post" >
+			<input type="hidden" name="ID" id="delete-ID" value="">
+			<button class="button is-block is-danger is-large is-fullwidth"> Delete Announcement </button>
+		</form>
 
-  // Check connection
-  if ($conn->connect_error) {
-    echo("Connection failed <br>");
-  }else {
-	echo("Connected <br>");
-  }
-  
-  $username=$_SESSION['username'];
-  $title=$_POST["title"];
-  $body=$_POST["body"];
-  //$query="INSERT INTO `announcement` (`AnnouncementID`, `Title`, `Body`, `Creator`, `Timestamp`) VALUES (NULL, '$title', '$body', '$username', current_timestamp());";
-  //$result=mysqli_query($conn,$query);
+    </div>
+  </div>
 
-?>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
