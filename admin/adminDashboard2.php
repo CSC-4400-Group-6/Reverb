@@ -35,7 +35,7 @@
 				
 					<!-- Page Title -->
 					<section class="hero is-info welcome is-small">
-						<div class="hero-body">
+						<div class="hero-body" style="background: linear-gradient(to right, #5B86E5, #36D1DC);">
 							<div class="container">
 								<h1 class="title">
 									Hello <?php echo $_SESSION['username'] ?? null; ?>
@@ -64,8 +64,8 @@
 							</div>
 							<div class="tile is-parent">
 								<article class="tile is-child box">
-									<p class="title">7k</p>
-									<p class="subtitle">Open Tickets</p>
+									<p class="title"> <?php $conn = new mysqli("localhost", "root", "", "reverb"); $result=mysqli_query($conn,"SELECT * FROM `announcement`;"); echo $result->num_rows; ?></p>
+									<p class="subtitle">Announcements</p>
 								</article>
 							</div>
 						</div>

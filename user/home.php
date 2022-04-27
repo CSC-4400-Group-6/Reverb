@@ -4,26 +4,29 @@
 var clicked;
 function submitForm(that) {
 	if(clicked == 1) {
-		const $target = document.getElementById("modal-js-edit-announcement")
+		// Fill out the modal
 		const $title = document.getElementById("edit-title")
 		const $body = document.getElementById("edit-body")
+		const $ID = document.getElementById("edit-ID")
+		const $timestamp = document.getElementById("edit-timestamp")
 		$title.value = that.title.value
 		$body.value = that.body.value
-		
-		const $ID = document.getElementById("edit-ID")
 		$ID.value = that.ID.value
-		
-		const $timestamp = document.getElementById("edit-timestamp")
 		$timestamp.value = that.timestamp.value
 		
+		// Bring it up
+		const $target = document.getElementById("modal-js-edit-announcement")
 		$target.classList.add('is-active');
-	} else {
-		const $target = document.getElementById("modal-js-delete-announcement")
-		
+	} else if(clicked == 2) {
+		// Fill out the modal
 		const $ID = document.getElementById("delete-ID")
 		$ID.value = that.ID.value
 		
+		// Bring it up
+		const $target = document.getElementById("modal-js-delete-announcement")
 		$target.classList.add('is-active');
+	} else {
+		alert("you find yourself in a strange place")
 	}
 }
 </script>
@@ -55,7 +58,7 @@ function submitForm(that) {
 				<div class="column is-8 is-offset-2">
 				
 					<?php
-					// Modal that is hidden until opened
+					// All our modals that are hidden until opened
 					include("../logic/addAnnouncement.php");
 					include("../logic/editAnnouncement.php");
 					include("../logic/deleteAnnouncement.php");
@@ -71,7 +74,6 @@ function submitForm(that) {
 					}
 					?>
 					
-				
 					<?php 
 					// Connect to the db
 					$conn = new mysqli("localhost", "root", "", "reverb");
@@ -85,11 +87,11 @@ function submitForm(that) {
 							if($_SESSION['IsAdmin'] == 1)
 							{
 							echo	'<form action = "" onsubmit="submitForm(this); return false;">
-									<input type="hidden" name="ID"        value="' . $row['AnnouncementID'] .  '">
-									<input type="hidden" name="title"     value="' . $row['Title'] .           '">
-									<input type="hidden" name="body"      value="' . $row['Body'] .            '">
-									<input type="hidden" name="creator"   value="' . $row['Creator'] .         '">
-									<input type="hidden" name="timestamp" value="' . $row['Timestamp'] .       '">
+									<input type="hidden" name="ID"        value="' . $row['AnnouncementID'] . '">
+									<input type="hidden" name="title"     value="' . $row['Title'] .          '">
+									<input type="hidden" name="body"      value="' . $row['Body'] .           '">
+									<input type="hidden" name="creator"   value="' . $row['Creator'] .        '">
+									<input type="hidden" name="timestamp" value="' . $row['Timestamp'] .      '">
 									<div class="card article">
 										<div class="card-content">
 											<div class="media">
@@ -99,8 +101,8 @@ function submitForm(that) {
 														<span class="tag is-rounded is-info">@' . $row['Creator']   . '</span>
 														<span class="tag is-rounded">'          . $row['Timestamp'] . '</span>
 													</div>													
-													<input class="button is-warning" type="submit" onclick="clicked=1" value="Edit"> </input> 
-													<input class="button is-danger"  type="submit" onclick="clicked=2" name="delete"  value="Delete Post"> </input> 
+													<input class="button is-warning" type="submit" onclick="clicked=1" value="Edit Post">   </input> 
+													<input class="button is-danger"  type="submit" onclick="clicked=2" value="Delete Post"> </input> 
 												</div>
 											</div>
 											<div class="content article-body">
