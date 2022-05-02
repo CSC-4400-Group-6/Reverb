@@ -22,124 +22,95 @@
 		<div class="container">
 			<div class="column is-8 is-offset-2">
 			
-				<div class="field has-addons">
-					<div class="control is-expanded">
-						<input class="input" type="text" placeholder="Search:">
-					</div>
-					<div class="control">
-						<a class="button is-info">
-							Search
-						</a>
-					</div>
-				</div>
-				
-				<div class="field is-horizontal">
-					<div class="field-label is-normal">
-						<label class="label">Search by Tag:</label>
-					</div>
-					<div class="field-body">
-						<div class="field">
-							<p class="control is-expanded has-icons-left">
-								<input class="input" type="text">
-								<span class="icon is-small is-left">
-									<i class="fas fa-user"></i>
-								</span>
-							</p>
+				<!-- User Search -->
+				<form method="post">
+					<div class="field has-addons">
+						<div class="control is-expanded">
+							<input class="input" type="text" name ="txtSearch" placeholder="Song Name:">
+						</div>
+						<div class="control">
+							<button class="button is-info" type="submit" name="btnSearch">
+								Search
+							</button>
 						</div>
 					</div>
-				</div>
+				</form>
+				<hr>	
 				
-				<div class="field">
-					<div class="control">
-						<div class="select">
-						<select>
-							<option>Add Tag...</option>
-							<option>Music</option>
-							<option>Sound FX</option>
-						</select>
-						</div>
-					</div>
-				</div>
-				
-				<hr>
-				
-				<!-- START AUDIO ENTRY -->
-				<article class="media">
-					<figure class="media-left">
-						<p class="image is-128x128">
-						<img src="https://bulma.io/images/placeholders/128x128.png">
-						</p>
-					</figure>
-					<div class="media-content">
-						<div class="content">
-						<p>
-							<strong>Song Name</strong> <small>@Artist</small> <small>Album</small>
-							<br>
-						</p>
-						<audio controls autoplay muted>
-							<source src="test.mp3" type="audio/mpeg">
-						</audio>
-						<br><br>
-						<button class="button">Comments (X) </button>
-						<button class="button">Likes (Y) </button>
-						<button class="button">Favorite </button>
-						<button class="button">Download </button>
-						</div>
-					</div>
-				</article>
-				<!-- END AUDIO ENTRY -->
-				
-				<!-- START AUDIO ENTRY -->
-				<article class="media">
-					<figure class="media-left">
-						<p class="image is-128x128">
-						<img src="https://bulma.io/images/placeholders/128x128.png">
-						</p>
-					</figure>
-					<div class="media-content">
-						<div class="content">
-						<p>
-							<strong>Song Name</strong> <small>@Artist</small> <small>Album</small>
-							<br>
-						</p>
-						<audio controls autoplay muted>
-							<source src="test.mp3" type="audio/mpeg">
-						</audio>
-						<br><br>
-						<button class="button">Comments (X) </button>
-						<button class="button">Likes (Y) </button>
-						<button class="button">Favorite </button>
-						<button class="button">Download </button>
-						</div>
-					</div>
-				</article>
-				<!-- END AUDIO ENTRY -->
-				
-				<!-- START AUDIO ENTRY -->
-				<article class="media">
-					<figure class="media-left">
-						<p class="image is-128x128">
-						<img src="https://bulma.io/images/placeholders/128x128.png">
-						</p>
-					</figure>
-					<div class="media-content">
-						<div class="content">
-						<p>
-							<strong>Song Name</strong> <small>@Artist</small> <small>Album</small>
-							<br>
-						</p>
-						<audio controls autoplay muted>
-							<source src="test.mp3" type="audio/mpeg">
-						</audio>
-						<br><br>
-						<button class="button">Comments (X) </button>
-						<button class="button">Likes (Y) </button>
-						<button class="button">Favorite </button>
-						<button class="button">Download </button>
-						</div>
-					</div>
-				</article>
-				<!-- END AUDIO ENTRY -->
+				<!-- AUDIO ENTRIES -->
+				<tbody id = "userEntries">	
+					<?php
+						if(isset($_POST['btnSearch'])) {
+							// Connect to the db
+							$conn = new mysqli("localhost", "root", "", "reverb");
+							// We want ALL our user tables
+							$result=mysqli_query($conn,"SELECT * FROM `audio` WHERE `Filename` LIKE '%" . $_POST['txtSearch'] . "%';");
+							while ($row = $result->fetch_assoc()) {
+								echo '
+								<article class="media">
+									<figure class="media-left">
+										<p class="image is-128x128">
+										<img src="https://bulma.io/images/placeholders/128x128.png">
+										</p>
+									</figure>
+									<div class="media-content">
+										<div class="content">
+										<p>
+											<strong>' . $row['Filename'] . '</strong> 
+											<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
+											<span class="tag is-rounded">' . $row['Album'] . '</span>
+											<br>
+										</p>
+										<audio controls autoplay muted>
+											<source src="test.mp3" type="audio/mpeg">
+										</audio>
+										<br><br>
+										<button class="button is-info">    Comments </button>
+										<button class="button is-danger">  Likes    </button>
+										<button class="button is-success"> Favorite </button>
+										<button class="button is-link">    Download </button>
+										</div>
+									</div>
+								</article>
+								';
+							}
+						} else {
+						// Connect to the db
+							$conn = new mysqli("localhost", "root", "", "reverb");
+							// We want ALL our user tables
+							$result=mysqli_query($conn,"SELECT * FROM `audio`");
+							while ($row = $result->fetch_assoc()) {
+								echo '
+								<article class="media">
+									<figure class="media-left">
+										<p class="image is-128x128">
+										<img src="https://bulma.io/images/placeholders/128x128.png">
+										</p>
+									</figure>
+									<div class="media-content">
+										<div class="content">
+										<p>
+											<strong>' . $row['Filename'] . '</strong> 
+											<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
+											<span class="tag is-rounded">' . $row['Album'] . '</span>
+											<br>
+										</p>
+										<audio controls autoplay muted>
+											<source src="test.mp3" type="audio/mpeg">
+										</audio>
+										<br><br>
+										<button class="button is-info">    Comments </button>
+										<button class="button is-danger">  Likes    </button>
+										<button class="button is-success"> Favorite </button>
+										<button class="button is-link">    Download </button>
+										</div>
+									</div>
+								</article>
+								';	
+							}
+						}
+					?>
+				</tbody>
 			
 			</div>			
 		</div>

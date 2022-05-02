@@ -51,7 +51,7 @@
 							<div class="card-content">
 								<div class="field has-addons">
 									<div class="control is-expanded">
-										<input class="input" type="text" name = "txtSearch">
+										<input class="input" type="text" name ="txtSearch" placeholder="User Name:">
 									</div>
 									<div class="control">
 										<button class="button is-info" type="submit" name="btnSearch">
