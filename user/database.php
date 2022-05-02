@@ -26,7 +26,7 @@
 				<form method="post">
 					<div class="field has-addons">
 						<div class="control is-expanded">
-							<input class="input" type="text" name ="txtSearch" placeholder="Song Name:">
+							<input class="input" type="text" name ="txtSearch" placeholder="Audio Name:">
 						</div>
 						<div class="control">
 							<button class="button is-info" type="submit" name="btnSearch">
