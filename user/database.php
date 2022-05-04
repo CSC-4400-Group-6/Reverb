@@ -1,4 +1,28 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+// All our modals that are hidden until opened
+include("../logic/modalLogic.php");
+include("../logic/uploadFileModal.php");
+include("../logic/deleteFileModal.php");
+?>
+
+<script>
+var clicked;
+function submitForm(that) {
+	if(clicked == 2) {
+		// Fill out the modal
+		const $ID = document.getElementById("delete-ID")
+		const $filepath = document.getElementById("filePath-ID")
+		$ID.value = that.ID.value
+		$filepath.value = that.filePath.value
+		// Bring it up
+		const $target = document.getElementById("modal-js-delete-file")
+		$target.classList.add('is-active');
+	} else {
+		alert("you find yourself in a strange place")
+	}
+}
+</script>
 
 <HTML>
 	<head>
@@ -7,7 +31,7 @@
 		<meta charset=utf-8>
 		<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-		<link rel="stylesheet"href="hometemp.css">
+		<link rel="stylesheet"href="hometemp2.css">
 	</head>
 	<body>
 		
@@ -21,6 +45,11 @@
 		<!--Container block that all content goes into. It's a big box.-->
 		<div class="container">
 			<div class="column is-8 is-offset-2">
+			
+				<!-- File Upload -->
+				<div class="columns is-mobile is-centered">
+					<button class="button is-block is-half is-info is-large js-modal-trigger" data-target="modal-js-file-upload"> Upload File </button>
+				</div>
 			
 				<!-- User Search -->
 				<form method="post">
@@ -38,75 +67,131 @@
 				<hr>	
 				
 				<!-- AUDIO ENTRIES -->
-				<tbody id = "userEntries">	
+				<tbody id = "userEntries">								
 					<?php
-						if(isset($_POST['btnSearch'])) {
-							// Connect to the db
-							$conn = new mysqli("localhost", "root", "", "reverb");
-							// We want ALL our user tables
-							$result=mysqli_query($conn,"SELECT * FROM `audio` WHERE `Filename` LIKE '%" . $_POST['txtSearch'] . "%';");
-							while ($row = $result->fetch_assoc()) {
-								echo '
-								<article class="media">
-									<figure class="media-left">
-										<p class="image is-128x128">
-										<img src="https://bulma.io/images/placeholders/128x128.png">
-										</p>
-									</figure>
-									<div class="media-content">
-										<div class="content">
-										<p>
-											<strong>' . $row['Filename'] . '</strong> 
-											<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
-											<span class="tag is-rounded">' . $row['Album'] . '</span>
-											<br>
-										</p>
-										<audio controls autoplay muted>
-											<source src="test.mp3" type="audio/mpeg">
-										</audio>
-										<br><br>
-										<button class="button is-info">    Comments </button>
-										<button class="button is-danger">  Likes    </button>
-										<button class="button is-success"> Favorite </button>
-										<button class="button is-link">    Download </button>
-										</div>
-									</div>
-								</article>
-								';
+						// ADMIN SHIZ
+						if($_SESSION['IsAdmin'] ?? null)
+						{
+							// We only show the administrator panel to admins
+							if($_SESSION['IsAdmin'] == 1)
+							{
+								if(isset($_POST['btnSearch'])) {
+									// Connect to the db
+									$conn = new mysqli("localhost", "root", "", "reverb");
+									// We want ALL our user tables
+									$result=mysqli_query($conn,"SELECT * FROM `audio` WHERE `Filename` LIKE '%" . $_POST['txtSearch'] . "%';");
+									while ($row = $result->fetch_assoc()) {
+										echo '
+										<form action = "" onsubmit="submitForm(this); return false;">
+										<input type="hidden" name="ID"        value="' . $row['audioID']  . '">
+										<input type="hidden" name="filePath"  value="' . $row['filePath'] . '">
+										<article class="media">
+											<div class="media-content">
+												<div class="content">
+												<p>
+													<strong>' . $row['Filename'] . '</strong> 
+													<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
+													<br>
+												</p>
+												<audio controls autostart="0">
+													<source src="' . $row['filePath'] . '" type="audio/mpeg">
+												</audio>
+												<br><br>
+												<a download class="button is-link" href="' . $row['filePath'] . '"> Download </a>
+												<input class="button is-danger"  type="submit" onclick="clicked=2" value="Delete File"> </input> 
+												</div>
+											</div>
+										</article>
+										</form>
+										';
+									}
+								} 
+								else {
+									// Connect to the db
+									$conn = new mysqli("localhost", "root", "", "reverb");
+									// We want ALL our user tables
+									$result=mysqli_query($conn,"SELECT * FROM `audio`");
+									while ($row = $result->fetch_assoc()) {
+										echo '
+										<form action = "" onsubmit="submitForm(this); return false;">
+										<input type="hidden" name="ID"        value="' . $row['audioID'] . '">
+										<input type="hidden" name="filePath"  value="' . $row['filePath'] . '">
+										<article class="media">
+											<div class="media-content">
+												<div class="content">
+												<p>
+													<strong>' . $row['Filename'] . '</strong> 
+													<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
+													<br>
+												</p>
+												<audio controls autostart="0">
+													<source src="' . $row['filePath'] . '" type="audio/mpeg">
+												</audio>
+												<br><br>
+												<a download class="button is-link" href="' . $row['filePath'] . '"> Download </a>
+												<input class="button is-danger"  type="submit" onclick="clicked=2" value="Delete File"> </input> 
+												</div>
+											</div>
+										</article>
+										</form>
+										';	
+									}
+								}
 							}
-						} else {
-						// Connect to the db
-							$conn = new mysqli("localhost", "root", "", "reverb");
-							// We want ALL our user tables
-							$result=mysqli_query($conn,"SELECT * FROM `audio`");
-							while ($row = $result->fetch_assoc()) {
-								echo '
-								<article class="media">
-									<figure class="media-left">
-										<p class="image is-128x128">
-										<img src="https://bulma.io/images/placeholders/128x128.png">
-										</p>
-									</figure>
-									<div class="media-content">
-										<div class="content">
-										<p>
-											<strong>' . $row['Filename'] . '</strong> 
-											<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
-											<span class="tag is-rounded">' . $row['Album'] . '</span>
-											<br>
-										</p>
-										<audio controls autoplay muted>
-											<source src="test.mp3" type="audio/mpeg">
-										</audio>
-										<br><br>
-										<button class="button is-info">    Comments </button>
-										<button class="button is-danger">  Likes    </button>
-										<button class="button is-success"> Favorite </button>
-										<button class="button is-link">    Download </button>
+						}
+						else {
+							// REGULAR OL USER	
+							if(isset($_POST['btnSearch'])) {
+								// Connect to the db
+								$conn = new mysqli("localhost", "root", "", "reverb");
+								// We want ALL our user tables
+								$result=mysqli_query($conn,"SELECT * FROM `audio` WHERE `Filename` LIKE '%" . $_POST['txtSearch'] . "%';");
+								while ($row = $result->fetch_assoc()) {
+									echo '
+									<article class="media">
+										<div class="media-content">
+											<div class="content">
+											<p>
+												<strong>' . $row['Filename'] . '</strong> 
+												<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
+												<br>
+											</p>
+											<audio controls autostart="0">
+												<source src="' . $row['filePath'] . '" type="audio/mpeg">
+											</audio>
+											<br><br>
+											<a download class="button is-link" href="' . $row['filePath'] . '"> Download </a>
+											</div>
 										</div>
-									</div>
-								</article>
-								';	
+									</article>
+									';
+								}
+							}
+							else {
+								// Connect to the db
+								$conn = new mysqli("localhost", "root", "", "reverb");
+								// We want ALL our user tables
+								$result=mysqli_query($conn,"SELECT * FROM `audio`");
+								while ($row = $result->fetch_assoc()) {
+									echo '
+									<article class="media">
+										<div class="media-content">
+											<div class="content">
+											<p>
+												<strong>' . $row['Filename'] . '</strong> 
+												<span class="tag is-rounded is-info"> @' . $row['Artist'] . '</span>
+												<br>
+											</p>
+											<audio controls autostart="0">
+												<source src="' . $row['filePath'] . '" type="audio/mpeg">
+											</audio>
+											<br><br>
+											<a download class="button is-link" href="' . $row['filePath'] . '"> Download </a>
+											</div>
+										</div>
+									</article>
+									';	
+								}
 							}
 						}
 					?>

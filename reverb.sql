@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2022 at 04:16 PM
+-- Generation Time: May 05, 2022 at 01:36 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -54,16 +54,16 @@ CREATE TABLE `audio` (
   `audioID` int(11) NOT NULL,
   `Filename` varchar(255) NOT NULL,
   `Artist` varchar(255) NOT NULL,
-  `Album` varchar(255) NOT NULL
+  `filePath` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `audio`
 --
 
-INSERT INTO `audio` (`audioID`, `Filename`, `Artist`, `Album`) VALUES
-(1, 'Billie Jean', 'Michael Jackson', 'Thriller'),
-(2, 'Wilhelm Scream', 'Ben Burtt', 'Warner Bros');
+INSERT INTO `audio` (`audioID`, `Filename`, `Artist`, `filePath`) VALUES
+(2, 'Wilhelm Scream', 'Ben Burtt', '../musicFiles/wilhelmScream.mp3'),
+(5, 'TF2 Spy Cant Touch This', 'Team Fortress 2', '../musicFiles/seduceme.mp3');
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`IDUser`, `Username`, `Password`, `IsAdmin`) VALUES
-(1, 'TestUser', 'APassword', 0),
+(1, 'TestUser', 'APassword', 1),
 (2, 'admin', 'admin', 1),
 (4, 'bad', 'badboy', 0);
 
@@ -123,7 +123,7 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `audio`
 --
 ALTER TABLE `audio`
-  MODIFY `audioID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `audioID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
